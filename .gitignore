@@ -1,0 +1,12 @@
+old.git/
+samples/
+nexus_test/data
+nexus_test/out
+*.back
+*.log
+mypy.ini
+output.txt
+*.json
+*.log
+
+
