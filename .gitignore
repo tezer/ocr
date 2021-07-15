@@ -1,5 +1,6 @@
 old.git/
 samples/
+.idea/
 nexus_test/data
 nexus_test/out
 *.back
