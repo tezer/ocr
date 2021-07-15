@@ -7,7 +7,7 @@ from scipy.ndimage import interpolation as inter
 
 import cv2
 import pytesseract
-from nexus_test.image_data_processor import get_confidence_score, replacements
+from ocr.image_data_processor import get_confidence_score, replacements
 
 logger = logging.getLogger("__main__")
 
