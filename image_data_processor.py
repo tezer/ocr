@@ -28,12 +28,21 @@ def spellcheck(s: str) -> str:
 
 def get_score(data):
     lines = [line for line in data if line.startswith('5') and len(line) > 0]
-    good = len([line for line in lines if int(line.split('\t')[10]) >= THRESHOLD])
-    bad = len([line for line in lines if int(line.split('\t')[10]) < THRESHOLD])
+    good = len(
+        [line for line in lines if int(line.split('\t')[10]) >= THRESHOLD])
+    bad = len(
+        [line for line in lines if int(line.split('\t')[10]) < THRESHOLD])
     return good, bad, lines
 
 
 def get_confidence_score(data: str, step: int) -> Tuple[int, int]:
+    """
+    Gets the number of well recognized words and the number of poorly recognized words For a data that has more
+    recognized words than the previous best, recognized words are checked and replacements for wrong words found
+    :param data: data from tesseract for each recognized substring
+    :param step: current step
+    :return: number of good words and number of bad words
+    """
     # Skip the first line with headers
     data_lines = data.split('\n')[1:]
     good, bad, lines = get_score(data_lines)

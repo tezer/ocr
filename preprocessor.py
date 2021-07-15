@@ -20,6 +20,11 @@ def find_score(arr, angle):
 
 
 def unskew(image: npt.ArrayLike) -> npt.ArrayLike:
+    """
+    Detects if the image is skewed and rotates it to fix the skew
+    :param image:
+    :return:
+    """
     logger.info("Detecting if the image is skewed.")
     orig_image = image.copy()
     image = Image.fromarray(image)
@@ -44,6 +49,11 @@ def unskew(image: npt.ArrayLike) -> npt.ArrayLike:
 
 
 def preprocess(image: npt.ArrayLike) -> npt.ArrayLike:
+    """
+    Basic filtering
+    :param image:
+    :return:
+    """
     image = unskew(image)
     gray = 255 - cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     # prepare a mask using Otsu threshold, then copy from original. this removes some noise
@@ -55,9 +65,10 @@ def preprocess(image: npt.ArrayLike) -> npt.ArrayLike:
 
 def process_image(image_: npt.ArrayLike) -> str:
     """
-    mostly from here https://stackoverflow.com/questions/48327567/removing-horizontal-underlines
+    performs iterative cleaning of the image. Tracks image quality metrics (number of recognized words,
+    well recognized words to poorly recognized words ratio) to stop the iterations
     :param image_:
-    :return:
+    :return: str text produced by tesseract after recognizing the best variant of the preprocessed image
     """
     gray_ = preprocess(image_)
     best_score = 0
@@ -103,6 +114,13 @@ def process_image(image_: npt.ArrayLike) -> str:
 
 def _process(gray: npt.ArrayLike, image: npt.ArrayLike,
              step: npt.ArrayLike) -> npt.ArrayLike:
+    """
+    Deletes horizontal lines iterating through different length of the possible lines
+    :param gray: grayscale version of the image
+    :param image: the image
+    :param step: expected length of the line to be removed
+    :return: cleaned image (without horizontal lines)
+    """
     # make copy of the low-noise underlined image
     gray_copy = gray.copy()
     # scan each row and remove lines
