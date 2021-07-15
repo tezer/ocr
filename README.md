@@ -4,7 +4,7 @@ This is a simple command-line OCR utility for extracting text from image files (
 
 ## Installation
 1. clone the project
-1. install dependencies with poetry install
+1. install dependencies with `poetry install`
 
 ## Usage
 Requires python 3.8
