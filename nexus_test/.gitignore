@@ -1,0 +1,10 @@
+out/
+data/
+samples/
+../tests/
+mypy.ini
+output.txt
+*.json
+*.log
+
+
