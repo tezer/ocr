@@ -86,7 +86,9 @@ def process_image(image_: npt.ArrayLike) -> str:
         elif best_balance > 2:
             n -= 1
         logger.debug(f"{step}: {good}, {bad}")
-    logger.debug(f"Best step is {best_step}")
+    logger.debug(
+        f"Best step is {best_step} with balance = {best_balance} and score = {best_score}"
+    )
     logger.info("Finished image improvement")
     step_replacements = replacements[best_step]
     processed_image = processed_images[best_step]
