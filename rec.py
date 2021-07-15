@@ -7,7 +7,7 @@ import numpy as np
 
 import _io
 import cv2
-from ocr.preprocessor import process_image
+from preprocessor import process_image
 from pdf2image import convert_from_path
 
 try:
