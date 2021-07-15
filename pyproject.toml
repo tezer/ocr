@@ -2,19 +2,20 @@
 name = "nexus_test"
 version = "0.1.0"
 description = ""
-authors = ["Taras Zagibalov <4751652+tezer@users.noreply.github.com>"]
+authors = ["Your Name <you@example.com>"]
 
 [tool.poetry.dependencies]
 python = ">=3.8,<3.10"
 click = "^8.0.1"
-pytesseract = "^0.3.8"
 numpy = "^1.21.0"
+opencv-python = "^4.5.3"
+Pillow = "^8.3.1"
 scipy = "^1.7.0"
-pdf2image = "^1.16.0"
+pytesseract = "^0.3.8"
 autocorrect = "^2.5.0"
+pdf2image = "^1.16.0"
 
 [tool.poetry.dev-dependencies]
-pytest = "^5.2"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
