@@ -63,7 +63,7 @@ def preprocess(image: npt.ArrayLike) -> npt.ArrayLike:
     return gray
 
 
-def process_image(image_: npt.ArrayLike) -> str:
+def process_image(image_: npt.ArrayLike, language: str) -> str:
     """
     performs iterative cleaning of the image. Tracks image quality metrics (number of recognized words,
     well recognized words to poorly recognized words ratio) to stop the iterations
@@ -86,7 +86,7 @@ def process_image(image_: npt.ArrayLike) -> str:
         processed_image = _process(gray, image, step)
         processed_images[step] = processed_image
         data: str = pytesseract.image_to_data(processed_image)
-        good, bad = get_confidence_score(data, step)
+        good, bad = get_confidence_score(data, step, language)
         score = good
         if score > best_score:
             logger.info("Made some improvement")

@@ -44,14 +44,14 @@ def get_logger(name: str):
 logger = get_logger(__name__)
 
 
-def do_pdf_ocr(input_file: _io.BufferedReader) -> str:
+def do_pdf_ocr(input_file: _io.BufferedReader, language: str) -> str:
     images = convert_from_path(input_file.name)
     logger.info(f"Processing a PDF file, containing {len(images)} pages")
     texts: List[str] = []
     for image in images:
         logger.info(f"Processing page {len(texts) + 1}")
         im = np.asarray(image)
-        text = process_image(im)
+        text = process_image(im, language=language)
         texts.append(text)
         logger.info(
             f"Finished processing page {len(texts)} out of {len(images)}")
@@ -73,6 +73,11 @@ def do_pdf_ocr(input_file: _io.BufferedReader) -> str:
     'You need to write down a file name where the output will be saved. The default value is output.txt'
 )
 @click.option(
+    '--language',
+    default="en",
+    prompt='Specify the language of the input file (default is en)',
+)
+@click.option(
     '--verbose',
     default=False,
     prompt='Output more information about processing',
@@ -80,7 +85,7 @@ def do_pdf_ocr(input_file: _io.BufferedReader) -> str:
     'If you are bored and like reading, use this option for the command to wordy describing what it is '
     'doing.')
 def do_ocr(input_file: _io.BufferedReader, output_file: _io.TextIOWrapper,
-           verbose: bool) -> None:
+           verbose: bool, language: str) -> None:
     click.echo(
         f"Input file is {input_file.name}, output file is {output_file.name}, and verbose is {verbose}"
     )
@@ -89,10 +94,10 @@ def do_ocr(input_file: _io.BufferedReader, output_file: _io.TextIOWrapper,
     else:
         logger.setLevel(logging.ERROR)
     if input_file.name.endswith('.pdf'):
-        text = do_pdf_ocr(input_file)
+        text = do_pdf_ocr(input_file, language=language)
     else:
         im = cv2.imread(input_file.name)
-        text = process_image(im)
+        text = process_image(im, language=language)
     logger.info(
         f"Finished image recognition, writing out result into {output_file.name}"
     )

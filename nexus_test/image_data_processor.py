@@ -35,7 +35,7 @@ def get_score(data):
     return good, bad, lines
 
 
-def get_confidence_score(data: str, step: int) -> Tuple[int, int]:
+def get_confidence_score(data: str, step: int, language: str) -> Tuple[int, int]:
     """
     Gets the number of well recognized words and the number of poorly recognized words For a data that has more
     recognized words than the previous best, recognized words are checked and replacements for wrong words found
@@ -74,7 +74,10 @@ def get_confidence_score(data: str, step: int) -> Tuple[int, int]:
             if len(word) > 4 and any([x for x in good_words if word in x]):
                 logger.debug("Part: " + word)
                 continue
-            corrected = spellcheck(d[11])
+            if language == 'en':
+                corrected = spellcheck(d[11])
+            else:
+                corrected = d[11]
             if corrected != d[11]:
                 replacements[step].append((d[11], corrected, d[10]))
                 logger.debug(f"Replacement: {d[11]} > {corrected}; {d[10]}")
